@@ -36,7 +36,7 @@ def main(directory_p, parameters, tolerance):
     for i in element:
         if i.split(".")[1] == "xls": #seleziono il primo file .csv
             folder_picture = os.path.join(directory_p,i.split(".")[1])
-            os.makedir(folder_picture)
+            os.path.makedir(folder_picture)
             df = pd.read_excel(r"{}/{}".format(directory_p,i), encoding = "utf-8", header = 0)
             column = df.columns
             col = 1
