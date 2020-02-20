@@ -40,6 +40,8 @@ def main(directory_p):
 
             #FUNZIONA SOLO PRIMA COLONNA ORA
             df = pd.read_excel(r"C:\Users\Gianl\Downloads\Telegram Desktop\Data.xls", encoding = "utf-8")  #colonne pari x colonne dispari y
+            column = df.column
+            
             x_data = df["Frequenza 1"]
             y_data =df["Ampiezza 1"]
 
