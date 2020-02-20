@@ -17,10 +17,11 @@ import pandas as pd
 #Define the data to be fit with some noise:
 
 def func_ale (x, wn_x, wn_y, eta_x, eta_y, k_x, k_y):
-
+    #la funzione è ok
     return np.sqrt(((1-(x/wn_x)**2)/(((1-(x/wn_x)**2)**2+eta_x**2)*k_x)+(-eta_y/(((1-(x/wn_y)**2)**2+eta_y**2)*k_y)))**2+((-eta_x/(((1-(x/wn_x)**2)**2+eta_x**2)*k_x))+(-(1-(x/wn_y)**2)/(((1-(x/wn_y)**2)**2+eta_y**2)*k_y)))**2)
 
 def set_p0_rule(x_data, y_data):
+    #usare x_data per settarli
     wn_x = 194.339182788087
     wn_y = 195.688030521315
     Eta_x = 0.05
@@ -28,6 +29,7 @@ def set_p0_rule(x_data, y_data):
     K_x = 10
     K_y = 11
     return np.array([wn_x, wn_y, Eta_x, Eta_y, K_x, K_y])
+
 def main(directory_p):
     element = os.listdir(directory_p) #guardo tutti gli elementi nella directory
     #DA COMPLETARE LA RICERCA DEI FILE CSV OCCHIO ALLA VARIABILE I IN SAVEFIG
