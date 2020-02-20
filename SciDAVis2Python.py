@@ -7,6 +7,7 @@ Created on Thu Feb 20 10:03:21 2020
 
 
 from scipy.optimize import curve_fit
+from scipy.optimize import least_squares
 import numpy as np
 import argparse
 import pandas as pd
@@ -19,11 +20,11 @@ def func_ale (x, wn_x, wn_y, eta_x, eta_y, k_x, k_y):
 
     #la funzione è ok
     return np.sqrt(((1-(x/wn_x)**2)/(((1-(x/wn_x)**2)**2+eta_x**2)*k_x)+(-eta_y/(((1-(x/wn_y)**2)**2+eta_y**2)*k_y)))**2+((-eta_x/(((1-(x/wn_x)**2)**2+eta_x**2)*k_x))+(-(1-(x/wn_y)**2)/(((1-(x/wn_y)**2)**2+eta_y**2)*k_y)))**2)
-
 def set_p0_rule(x_value, parameters,tolerance):
     #usare x_data per settarli
-    wn_x = np.max(x_value) - tolerance/100*np.max(x_value)
-    wn_y = np.max(x_value) + tolerance/100*np.max(x_value)
+    med = (np.max(x_value) + np.min(x_value))/2
+    wn_x = med - tolerance/100*med
+    wn_y = med + tolerance/100*med
     Eta_x = parameters[0]
     Eta_y = parameters[1]
     K_x = parameters[2]
@@ -44,14 +45,32 @@ def main(directory_p, parameters, tolerance):
             x_data = df.filter(regex="Frequenza")
             y_data = df.filter(regex="Ampiezza")
             for x,y in zip(x_data, y_data):
+
                 x_value = x_data[x].dropna()
                 y_value = y_data[y].dropna()
+
+                index =  x_value > x_value.quantile(0.05)
+                index2 = x_value < x_value.quantile(0.99)
+
+                x_value = x_value.where (index == True)
+                y_value = y_value.where (index == True)
+
+                x_value = x_value.dropna()
+                y_value = y_value.dropna()
+
+                x_value = x_value.where(index2 == True)
+                y_value = y_value.where(index2 == True)
+
+                x_value = x_value.dropna()
+                y_value = y_value.dropna()
+
                 p0 = set_p0_rule(x_value, parameters, tolerance) #IMPOSTARE BENE!!
                 try:
-                    popt, pcov = curve_fit(func_ale, x_value, y_value, p0, method='lm', maxfev = 2000)
+                    popt, pcov = curve_fit(func_ale, x_value, y_value, p0, method='lm', maxfev = 1500)
                     Plot.draw(x_value, y_value, func_ale, "{} vs {}".format(x,y), os.path.join(folder_picture,str(col)+".png"), popt) #libreria nostra!
-                except:
-                    print ("{}, {} non converge".format(x,y))
+                except Exception as e:
+                    print (e)
+                    print ("{}, {} non converge\n".format(x,y))
                     pass
                 col += 1
 
