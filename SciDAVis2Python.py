@@ -11,7 +11,7 @@ import numpy as np
 import matplotlib
 import argparse
 import pandas as pd
-from Plot import plot
+from Plot import plot_my
 import os
 import random
 #Define the data to be fit with some noise:
@@ -50,7 +50,7 @@ def main(directory_p, parameters, tolerance):
                 y_value = y_data[y].dropna()
                 p0 = set_p0_rule(x_value, parameters, tolerance) #IMPOSTARE BENE!!
                 popt, pcov = curve_fit(func_ale, x_value, y_value, p0, method='lm')
-                plot (x, y, func_ale, "fit curve vs normal points", str(col)+".png", popt) #libreria nostra!
+                plot_my (x, y, func_ale, "fit curve vs normal points", str(col)+".png", popt) #libreria nostra!
                 col += 1
             #i.split["."][0]+"_"+"???"+"png
 
