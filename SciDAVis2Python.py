@@ -11,7 +11,7 @@ import numpy as np
 import matplotlib
 import argparse
 import pandas as pd
-
+from Plot import plot
 
 
 #Define the data to be fit with some noise:
@@ -41,14 +41,14 @@ def main(directory_p):
             #FUNZIONA SOLO PRIMA COLONNA ORA
             df = pd.read_excel(r"C:\Users\Gianl\Downloads\Telegram Desktop\Data.xls", encoding = "utf-8")  #colonne pari x colonne dispari y
             column = df.column
-            
+
             x_data = df["Frequenza 1"]
             y_data =df["Ampiezza 1"]
 
             x_data = x_data.dropna()
             y_data = y_data.dropna()
             popt, pcov = curve_fit(func_ale,x_data, y_data, p0 = p0, method='lm')
-
+            plot (????) #libreria nostra!
             #i.split["."][0]+"_"+"???"+"png
 
 
