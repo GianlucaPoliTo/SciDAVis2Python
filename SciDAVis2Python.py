@@ -21,20 +21,19 @@ def func_ale (x, wn_x, wn_y, eta_x, eta_y, k_x, k_y):
     return np.sqrt(((1-(x/wn_x)**2)/(((1-(x/wn_x)**2)**2+eta_x**2)*k_x)+(-eta_y/(((1-(x/wn_y)**2)**2+eta_y**2)*k_y)))**2+((-eta_x/(((1-(x/wn_x)**2)**2+eta_x**2)*k_x))+(-(1-(x/wn_y)**2)/(((1-(x/wn_y)**2)**2+eta_y**2)*k_y)))**2)
 
 def main(directory_p):
-    element = os.listdir(directory_p)
+    element = os.listdir(directory_p) #guardo tutti gli elementi nella directory
     #DA COMPLETARE LA RICERCA DEI FILE CSV OCCHIO ALLA VARIABILE I IN SAVEFIG
     #IMPLEMENTARE ANCHE IL SETTAGGIO DEI PARAMETRI INIZIALI
     for i in element:
-        if i.split(".")[1] == "csv":
-
-            p0 = np.array([192, 190, 0.05, 0.03, 10, 11])
+        if i.split(".")[1] == "csv": #seleziono il primo file .csv
+            p0 = np.array([192, 190, 0.05, 0.03, 10, 11]) #IMPOSTARE BENE!!
             wn_x = 194.339182788087
             wn_y = 195.688030521315
             Eta_x = 0.05
             Eta_y = 0.03
             K_x = 10
             K_y = 11
-
+            #FUNZIONA SOLO PRIMA COLONNA ORA
             df = pd.read_excel(r"C:\Users\Gianl\Downloads\Telegram Desktop\Data.xls", encoding = "utf-8")  #colonne pari x colonne dispari y
             x_data = df["Frequenza 1"]
             y_data =df["Ampiezza 1"]
@@ -43,7 +42,7 @@ def main(directory_p):
             y_data = y_data.dropna()
             popt, pcov = curve_fit(func_ale,x_data, y_data, p0 = p0, method='lm')
 
-
+            #i.split["."][0]+"_"+"???"+"png
 
 
 

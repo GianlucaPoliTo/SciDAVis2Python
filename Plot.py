@@ -15,7 +15,7 @@ plt.rcParams['legend.fontsize'] = 20
 plt.rcParams['figure.titlesize'] = 15
 plt.ioff()
 
-def plot(x_data, y_data, func_ale, title, name_file, fig_size = [16,9]):
+def plot(x_data, y_data, func, title , name_file, fig_size = [16,9]):
     plt.figure(figsize = fig_size)
     plt.plot(x_data, y_data, 'b.', label='data')
     plt.plot(x_data, func_ale(x_data, *popt), 'g-',
