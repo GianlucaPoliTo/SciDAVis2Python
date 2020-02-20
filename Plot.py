@@ -1,6 +1,6 @@
 import matplotlib.pyplot as plt
 import matplotlib
-
+from SciDAVis2Python import func_ale
 matplotlib.rcParams.update({'font.size': 30})
 plt.rcParams['font.family'] = 'serif'
 plt.rcParams['font.serif'] = 'Ubuntu'
@@ -15,14 +15,15 @@ plt.rcParams['legend.fontsize'] = 20
 plt.rcParams['figure.titlesize'] = 15
 plt.ioff()
 
-def plot(x_data, y_data, func, title , name_file, popt,fig_size = [16,9]):
+def plot(x_data, y_data, func, title, name_file, popt,fig_size = [16,9]):
     plt.figure(figsize = fig_size)
-    plt.plot(x_data, y_data, 'b.', label='data')
-    plt.plot(x_data, func(x_data, *popt), 'g-',
+    plt.plot(x_data, y_data, 'k.', label='data')
+    plt.plot(x_data, func(x_data, *popt), 'r-',
              label='fit: wn_x=%5.3f, wn_y=%5.3f, Eta_x=%5.3f, Eta_y=%5.3f, k_x=%5.3f, \
-             Eta_y=%5.3f' % tuple(popt))
+             Eta_y=%5.3f' % tuple(popt), linewidth = 3)
     plt.xlabel('x')
     plt.ylabel('y')
+    plt.title(title)
     plt.legend()
     plt.grid()
     plt.savefig(name_file, dpi = 300)
